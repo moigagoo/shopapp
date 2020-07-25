@@ -1,3 +1,11 @@
-nimcache/
-nimblecache/
-htmldocs/
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+*.exe
+*.html
+*.idx
+*.db
+
+htmldocs
+bin
