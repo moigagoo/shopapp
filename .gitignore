@@ -9,3 +9,7 @@
 
 htmldocs
 bin
+
+.last
+.env
+
