@@ -33,11 +33,13 @@ Usage
 
     $ norman migrate
 
-4.  Run the server and send requests to it in a separate terminal:
+4.  Run the server:
 
 .. code-block::
 
-    $ /bin/app
+    $ ./bin/app
+
+5.  Send requests to it in a separate terminal:
 
 .. code-block::
 
