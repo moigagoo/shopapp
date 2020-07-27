@@ -18,11 +18,14 @@ export user
 
 router users:
   post "/":
-    withDb:
-      discard newUser(@"email").dup:
-        db.insert
+    echo @"email"
 
-    resp Http201
+    var user = newUser(@"email")
+
+    withDb:
+      db.insert(user)
+
+    resp(Http201, $user.id)
 
   get "/@id":
     var user = newUser("")
