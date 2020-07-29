@@ -35,7 +35,7 @@ router customers:
 
     try:
       withDb:
-        db.select(customer, "id = ?", @"id")
+        db.select(customer, "Customer.id = ?", @"id")
 
     except KeyError:
       resp Http404
@@ -60,7 +60,7 @@ router customers:
     try:
       withDb:
         discard newCustomer().dup:
-          db.select("id = ?", @"id")
+          db.select("Customer.id = ?", @"id")
           db.delete
 
       resp Http204
