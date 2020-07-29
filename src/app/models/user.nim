@@ -8,3 +8,6 @@ type
 
 func newUser*(email: string): User =
   User(email: email)
+
+func newUser*: User =
+  newUser("")

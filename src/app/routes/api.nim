@@ -1,10 +1,10 @@
 import jester
 
-import api/users
+import api/customers
 
 
-export users
+export customers
 
 
 router api:
-  extend users, "/users"
+  extend customers, "/customers"

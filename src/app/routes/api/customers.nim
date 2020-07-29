@@ -1,43 +1,46 @@
 import json
 import strutils
 import sugar
+import options
 
 import jester
 
 import ../../db_backend
-import ../../models/user
+import ../../models/[user, customer]
 
 
 export json
 export strutils
 export sugar
+export options
 
 export db_backend
 export user
+export customer
 
 
-router users:
+router customers:
   post "/":
-    echo @"email"
+    let age = if len(@"age") > 0: some parseInt(@"age").Natural else: none Natural
 
-    var user = newUser(@"email")
+    var customer = newCustomer(newUser(@"email"), @"name", age)
 
     withDb:
-      db.insert(user)
+      db.insert(customer)
 
-    resp(Http201, $user.id)
+    resp(Http201, $customer.id)
 
   get "/@id":
-    var user = newUser("")
+    var customer = newCustomer()
 
     try:
       withDb:
-        db.select(user, "id = ?", @"id")
+        db.select(customer, "id = ?", @"id")
 
     except KeyError:
       resp Http404
 
-    resp(%* user)
+    resp(%* customer)
 
   get "/":
     let
@@ -46,17 +49,17 @@ router users:
       limit = if perPage > 0: perPage else: 10
       offset = if page > 0: limit * (page - 1) else: 0
 
-    var users = @[newUser("")]
+    var customers = @[newCustomer()]
 
     withDb:
-      db.select(users, "1 LIMIT ? OFFSET ?", limit, offset)
+      db.select(customers, "1 LIMIT ? OFFSET ?", limit, offset)
 
-    resp(%* users)
+    resp(%* customers)
 
   delete "/@id":
     try:
       withDb:
-        discard newUser("").dup:
+        discard newCustomer().dup:
           db.select("id = ?", @"id")
           db.delete
 
