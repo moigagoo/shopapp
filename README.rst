@@ -21,46 +21,55 @@ Usage
 
     $ cp .env_example .env
 
-4.  Install dependencies and build the server:
-
-.. code-block::
-
-    $ nimble build
-
 3.  Apply migrations to set up the DB:
 
 .. code-block::
 
     $ norman migrate
 
-4.  Run the server:
+4.  Build and run the server:
 
 .. code-block::
 
-    $ ./bin/app
+    $ nimble build && ./bin/app
 
 5.  Send requests to it in a separate terminal:
 
 .. code-block::
 
-    $ curl -s http://localhost:5000/api/users/1 | jq
+    $ curl -s http://localhost:5000/api/customers/1 | jq
     {
-      "email": "user1@example.com",
+      "auth": {
+        "email": "user1@example.com",
+        "id": 1
+      },
+      "name": "Alice 1",
+      "age": 21,
       "id": 1
     }
 
-    $ curl -s 'http://localhost:5000/api/users/page=3&per_page=2'
+    $ curl -s 'http://localhost:5000/api/customers/page=3&per_page=2'
     [
       {
-        "email": "user5@example.com",
+        "auth": {
+          "email": "user5@example.com",
+          "id": 5
+        },
+        "name": "Alice 5",
+        "age": 25,
         "id": 5
       },
       {
-        "email": "user6@example.com",
+        "auth": {
+          "email": "user6@example.com",
+          "id": 6
+        },
+        "name": "Alice 6",
+        "age": 26,
         "id": 6
       }
     ]
 
-    $ curl -X DELETE -s http://localhost:5000/api/users/2
-    $ curl -X POST --data "email=foo@bar.com" http://localhost:5000/api/users/
+    $ curl -X DELETE -s http://localhost:5000/api/customers/2
+    $ curl -X POST --data "email=foo@bar.com" http://localhost:5000/api/customers/
     11
