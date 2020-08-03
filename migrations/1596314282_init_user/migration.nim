@@ -1,16 +1,15 @@
 include normanpkg/prelude
 
 import app/db_backend
+import models/user
 
 
 migrate:
-  import app/models/user
-
   withDb:
-    db.createTables(newUser(""))
+    db.createTables(newUser())
 
 undo:
-  let qry = "DROP TABLE IF EXISTS User"
+  let qry = """DROP TABLE IF EXISTS "User""""
 
   withDb:
     debug qry

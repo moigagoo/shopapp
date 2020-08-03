@@ -1,7 +1,7 @@
 include normanpkg/prelude
 
 import app/db_backend
-import app/models/customer
+import models/customer
 
 
 migrate:
