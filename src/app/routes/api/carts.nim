@@ -36,6 +36,9 @@ router carts:
     except KeyError:
       resp Http404
 
+    except DbError:
+      resp Http409
+
   get "/@id":
     var cart = newCart()
 
