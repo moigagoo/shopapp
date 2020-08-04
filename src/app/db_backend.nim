@@ -1,2 +1,2 @@
-import norm/sqlite
-export sqlite
+import norm/postgres
+export postgres

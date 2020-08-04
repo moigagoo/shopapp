@@ -35,7 +35,7 @@ router customers:
 
     try:
       withDb:
-        db.select(customer, "Customer.id = ?", @"id")
+        db.select(customer, """"Customer".id = $1""", parseInt(@"id"))
 
     except KeyError:
       resp Http404
@@ -52,7 +52,7 @@ router customers:
     var customers = @[newCustomer()]
 
     withDb:
-      db.select(customers, "1 LIMIT ? OFFSET ?", limit, offset)
+      db.select(customers, "TRUE LIMIT $1 OFFSET $2", limit, offset)
 
     resp(%* customers)
 
@@ -60,7 +60,7 @@ router customers:
     try:
       withDb:
         discard newCustomer().dup:
-          db.select("Customer.id = ?", @"id")
+          db.select(""""Customer".id = $1""", parseInt(@"id"))
           db.delete
 
       resp Http204
