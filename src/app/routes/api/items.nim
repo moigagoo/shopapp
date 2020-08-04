@@ -18,7 +18,9 @@ export item
 
 router items:
   post "/":
-    var item = newItem(@"title", parseFloat(@"price"))
+    let stock = if len(@"stock") > 0: parseInt(@"stock").Natural else: 0
+
+    var item = newItem(@"title", parseFloat(@"price"), stock)
 
     withDb:
       db.insert(item)
@@ -50,6 +52,24 @@ router items:
       db.select(items, "TRUE LIMIT $1 OFFSET $2", limit, offset)
 
     resp(%* items)
+
+  put "/@id":
+    var item = newItem()
+
+    try:
+      withDb:
+        db.select(item, """id = $1""", parseInt(@"id"))
+
+        if len(@"title") > 0: item.title = @"title"
+        if len(@"price") > 0: item.unitPrice = parseFloat(@"price")
+        if len(@"stock") > 0: item.stock = parseInt(@"stock").Natural
+
+        db.update(item)
+
+    except KeyError:
+      resp Http404
+
+    resp Http200
 
   delete "/@id":
     try:
