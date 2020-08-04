@@ -60,7 +60,7 @@ Usage
       "id": 1
     }
 
-    $ curl -s 'http://localhost:5000/api/customers/page=3&per_page=2'
+    $ curl -s 'http://localhost:5000/api/customers/?page=3&per_page=2' | jq
     [
       {
         "auth": {
@@ -83,5 +83,5 @@ Usage
     ]
 
     $ curl -X DELETE -s http://localhost:5000/api/customers/2
-    $ curl -X POST --data "email=foo@bar.com" http://localhost:5000/api/customers/
+    $ curl -X POST --data 'email=foo@bar.com' http://localhost:5000/api/customers/
     11
