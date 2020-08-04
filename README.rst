@@ -53,6 +53,7 @@ Usage
     {
       "auth": {
         "email": "user1@example.com",
+        "googleToken": "",
         "id": 1
       },
       "name": "Alice 1",
@@ -65,6 +66,7 @@ Usage
       {
         "auth": {
           "email": "user5@example.com",
+          "googleToken": "",
           "id": 5
         },
         "name": "Alice 5",
@@ -74,6 +76,7 @@ Usage
       {
         "auth": {
           "email": "user6@example.com",
+          "googleToken": "",
           "id": 6
         },
         "name": "Alice 6",
@@ -83,5 +86,5 @@ Usage
     ]
 
     $ curl -X DELETE -s http://localhost:5000/api/customers/2
-    $ curl -X POST --data 'email=foo@bar.com' http://localhost:5000/api/customers/
+    $ curl -X POST --data 'email=foo@bar.com&token=AbC123' http://localhost:5000/api/customers/
     11

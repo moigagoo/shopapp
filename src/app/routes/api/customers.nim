@@ -23,7 +23,7 @@ router customers:
   post "/":
     let age = if len(@"age") > 0: some parseInt(@"age").Natural else: none Natural
 
-    var customer = newCustomer(newUser(@"email"), @"name", age)
+    var customer = newCustomer(newUser(@"email", @"token"), @"name", age)
 
     withDb:
       db.insert(customer)
