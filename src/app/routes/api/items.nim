@@ -49,7 +49,7 @@ router items:
     var items = @[newItem()]
 
     withDb:
-      db.select(items, "TRUE LIMIT $1 OFFSET $2", limit, offset)
+      db.select(items, """TRUE LIMIT $1 OFFSET $2""", limit, offset)
 
     resp(%* items)
 

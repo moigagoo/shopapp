@@ -63,7 +63,7 @@ router subcarts:
     var subcarts = @[newSubcart()]
 
     withDb:
-      db.select(subcarts, "TRUE LIMIT $1 OFFSET $2", limit, offset)
+      db.select(subcarts, """TRUE LIMIT $1 OFFSET $2""", limit, offset)
 
     resp(%* subcarts)
 
