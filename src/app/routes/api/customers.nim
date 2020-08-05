@@ -74,7 +74,7 @@ router customers:
       items.add subcart.item
       total += subcart.qty * subcart.item.unitPrice
 
-    resp(%* {"items": items, "total": total})
+    resp(%* {"total": total, "items": items})
 
   delete "/@id":
     try:
