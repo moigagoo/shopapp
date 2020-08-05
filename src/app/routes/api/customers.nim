@@ -87,3 +87,13 @@ router customers:
 
     except KeyError:
       resp Http404
+
+  delete "/@id/cart/":
+    var subcarts = @[newSubcart()]
+
+    withDb:
+      discard @[newSubcart()].dup:
+        db.select(""""Customer".id = $1""", parseInt(@"id"))
+        db.delete
+
+    resp Http204
