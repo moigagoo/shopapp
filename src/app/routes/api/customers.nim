@@ -2,22 +2,25 @@ import json
 import strutils
 import sugar
 import options
+import lenientops
 
 import jester
 
 import ../../db_backend
-import ../../models/[user, customer, cart]
+import ../../models/[user, customer, subcart, item]
 
 
 export json
 export strutils
 export sugar
 export options
+export lenientops
 
 export db_backend
 export user
 export customer
-export cart
+export subcart
+export item
 
 
 router customers:
@@ -57,19 +60,21 @@ router customers:
 
     resp(%* customers)
 
-  get "/@id/carts/":
-    let
-      perPage = if len(@"per_page") > 0: parseInt(@"per_page") else: 10
-      page = if len(@"page") > 0: parseInt(@"page") else: 1
-      limit = if perPage > 0: perPage else: 10
-      offset = if page > 0: limit * (page - 1) else: 0
-
-    var carts = @[newCart()]
+  get "/@id/cart/":
+    var subcarts = @[newSubcart()]
 
     withDb:
-      db.select(carts, """"Customer".id = $1 LIMIT $2 OFFSET $3""", parseInt(@"id"), limit, offset)
+      db.select(subcarts, """"Customer".id = $1""", parseInt(@"id"))
 
-    resp(%* carts)
+    var
+      items: seq[Item]
+      total: float
+
+    for subcart in subcarts:
+      items.add subcart.item
+      total += subcart.qty * subcart.item.unitPrice
+
+    resp(%* {"items": items, "total": total})
 
   delete "/@id":
     try:

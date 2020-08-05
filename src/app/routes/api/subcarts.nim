@@ -5,7 +5,7 @@ import sugar
 import jester
 
 import ../../db_backend
-import ../../models/[cart, customer, item]
+import ../../models/[subcart, customer, item]
 
 
 export json
@@ -13,27 +13,27 @@ export strutils
 export sugar
 
 export db_backend
-export cart
+export subcart
 export customer
 export item
 
 
-router carts:
+router subcarts:
   post "/":
     let qty = if len(@"qty") > 0: parseInt(@"qty").Positive else: 1
 
     var
       customer = newCustomer()
       item = newItem()
-      cart = newCart(customer, item, qty)
+      subcart = newSubcart(customer, item, qty)
 
     try:
       withDb:
         db.select(customer, """"Customer".id = $1""", parseInt(@"customerId"))
         db.select(item, """id = $1""", parseInt(@"itemId"))
-        db.insert(cart)
+        db.insert(subcart)
 
-      resp(Http201, $cart.id)
+      resp(Http201, $subcart.id)
 
     except KeyError:
       resp Http404
@@ -42,16 +42,16 @@ router carts:
       resp Http400
 
   get "/@id":
-    var cart = newCart()
+    var subcart = newSubcart()
 
     try:
       withDb:
-        db.select(cart, """"Cart".id = $1""", parseInt(@"id"))
+        db.select(subcart, """"Subcart".id = $1""", parseInt(@"id"))
 
     except KeyError:
       resp Http404
 
-    resp(%* cart)
+    resp(%* subcart)
 
   get "/":
     let
@@ -60,23 +60,23 @@ router carts:
       limit = if perPage > 0: perPage else: 10
       offset = if page > 0: limit * (page - 1) else: 0
 
-    var carts = @[newCart()]
+    var subcarts = @[newSubcart()]
 
     withDb:
-      db.select(carts, "TRUE LIMIT $1 OFFSET $2", limit, offset)
+      db.select(subcarts, "TRUE LIMIT $1 OFFSET $2", limit, offset)
 
-    resp(%* carts)
+    resp(%* subcarts)
 
   put "/@id":
-    var cart = newCart()
+    var subcart = newSubcart()
 
     try:
       withDb:
-        db.select(cart, """"Cart".id = $1""", parseInt(@"id"))
+        db.select(subcart, """"Subcart".id = $1""", parseInt(@"id"))
 
-        if len(@"qty") > 0: cart.qty = parseInt(@"qty").Positive
+        if len(@"qty") > 0: subcart.qty = parseInt(@"qty").Positive
 
-        db.update(cart)
+        db.update(subcart)
 
     except KeyError:
       resp Http404
@@ -89,8 +89,8 @@ router carts:
   delete "/@id":
     try:
       withDb:
-        discard newCart().dup:
-          db.select(""""Cart".id = $1""", parseInt(@"id"))
+        discard newSubcart().dup:
+          db.select(""""Subcart".id = $1""", parseInt(@"id"))
           db.delete
 
       resp Http204

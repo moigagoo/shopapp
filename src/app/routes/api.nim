@@ -1,9 +1,9 @@
 import jester
 
-import api/[customers, items, carts]
+import api/[customers, items, subcarts]
 
 
-export carts
+export subcarts
 export customers
 export items
 
@@ -11,4 +11,4 @@ export items
 router api:
   extend customers, "/customers"
   extend items, "/items"
-  extend carts, "/carts"
+  extend subcarts, "/subcarts"
