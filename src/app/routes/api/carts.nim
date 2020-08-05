@@ -20,10 +20,12 @@ export item
 
 router carts:
   post "/":
+    let qty = if len(@"qty") > 0: parseInt(@"qty").Positive else: 1
+
     var
       customer = newCustomer()
       item = newItem()
-      cart = newCart(customer, item)
+      cart = newCart(customer, item, qty)
 
     try:
       withDb:
@@ -36,8 +38,8 @@ router carts:
     except KeyError:
       resp Http404
 
-    except DbError:
-      resp Http409
+    except:
+      resp Http400
 
   get "/@id":
     var cart = newCart()
@@ -64,6 +66,25 @@ router carts:
       db.select(carts, "TRUE LIMIT $1 OFFSET $2", limit, offset)
 
     resp(%* carts)
+
+  put "/@id":
+    var cart = newCart()
+
+    try:
+      withDb:
+        db.select(cart, """"Cart".id = $1""", parseInt(@"id"))
+
+        if len(@"qty") > 0: cart.qty = parseInt(@"qty").Positive
+
+        db.update(cart)
+
+    except KeyError:
+      resp Http404
+
+    except:
+      resp Http400
+
+    resp Http200
 
   delete "/@id":
     try:
