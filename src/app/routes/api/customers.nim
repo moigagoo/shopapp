@@ -61,20 +61,25 @@ router customers:
     resp(%* customers)
 
   get "/@id/cart/":
+    type
+      LineItem = object
+        qty: Positive
+        item: Item
+
     var subcarts = @[newSubcart()]
 
     withDb:
       db.select(subcarts, """"Customer".id = $1""", parseInt(@"id"))
 
     var
-      items: seq[Item]
+      lineItems: seq[LineItem]
       total: float
 
     for subcart in subcarts:
-      items.add subcart.item
+      lineItems.add LineItem(qty: subcart.qty, item: subcart.item)
       total += subcart.qty * subcart.item.unitPrice
 
-    resp(%* {"total": total, "items": items})
+    resp(%* {"total": total, "items": lineItems})
 
   delete "/@id":
     try:
