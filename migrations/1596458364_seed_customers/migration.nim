@@ -4,7 +4,8 @@ import sugar
 include normanpkg/prelude
 
 import app/db_backend
-import app/models/[user, customer]
+
+import models/[user, customer]
 
 
 migrate:

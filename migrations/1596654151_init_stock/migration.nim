@@ -2,15 +2,15 @@ include normanpkg/prelude
 
 import app/db_backend
 
-import models/item
+import models/stock
 
 
 migrate:
   withDb:
-    db.createTables(newItem())
+    db.createTables(newStock())
 
 undo:
-  let qry = """DROP TABLE IF EXISTS "Item""""
+  let qry = """DROP TABLE IF EXISTS "Stock""""
 
   withDb:
     debug qry
