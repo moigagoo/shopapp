@@ -24,4 +24,4 @@ migrate:
 
 undo:
   withDb:
-    discard "Your undo migration code goes here."
+    discard
