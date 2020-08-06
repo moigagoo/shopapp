@@ -18,9 +18,7 @@ export item
 
 router items:
   post "/":
-    let stock = if len(@"stock") > 0: parseInt(@"stock").Natural else: 0
-
-    var item = newItem(@"title", parseFloat(@"price"), stock)
+    var item = newItem(@"title", parseFloat(@"price"))
 
     withDb:
       db.insert(item)
@@ -62,7 +60,6 @@ router items:
 
         if len(@"title") > 0: item.title = @"title"
         if len(@"price") > 0: item.unitPrice = parseFloat(@"price")
-        if len(@"stock") > 0: item.stock = parseInt(@"stock").Natural
 
         db.update(item)
 
