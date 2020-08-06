@@ -81,6 +81,23 @@ router customers:
 
     resp(%* {"total": total, "items": lineItems})
 
+  put "/@id":
+    var customer = newCustomer()
+
+    try:
+      withDb:
+        db.select(customer, """"Customer".id = $1""", parseInt(@"id"))
+
+        if len(@"name") > 0: customer.name = @"name"
+        if len(@"age") > 0: customer.age = some parseInt(@"age").Natural
+
+        db.update(customer)
+
+    except KeyError:
+      resp Http404
+
+    resp Http200
+
   delete "/@id":
     try:
       withDb:
