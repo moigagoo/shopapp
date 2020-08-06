@@ -1,6 +1,3 @@
-import options
-import times
-
 import norm/model
 
 import customer, item
@@ -11,13 +8,10 @@ type
     customer*: Customer
     item*: Item
     qty*: Positive
-    purchasedAt*: Option[DateTime]
 
-func newSubcart*(customer: Customer, item: Item, qty: Positive, purchasedAt: Option[DateTime]): Subcart =
-  Subcart(customer: customer, item: item, qty: qty, purchasedAt: purchasedAt)
 
 func newSubcart*(customer: Customer, item: Item, qty: Positive): Subcart =
-  newSubcart(customer, item, qty, none DateTime)
+  Subcart(customer: customer, item: item, qty: qty)
 
 func newSubcart*(customer: Customer, item: Item): Subcart =
   newSubcart(customer, item, 1)
