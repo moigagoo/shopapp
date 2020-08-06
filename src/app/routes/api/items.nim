@@ -5,7 +5,7 @@ import sugar
 import jester
 
 import ../../db_backend
-import ../../models/item
+import ../../models/[item, stock]
 
 
 export json
@@ -14,6 +14,7 @@ export sugar
 
 export db_backend
 export item
+export stock
 
 
 router items:
@@ -50,6 +51,18 @@ router items:
       db.select(items, """TRUE LIMIT $1 OFFSET $2""", limit, offset)
 
     resp(%* items)
+
+  get "/@id/stock/":
+    var stock = newStock()
+
+    try:
+      withDb:
+        db.select(stock, """"Stock".item = $1""", parseInt(@"id"))
+
+    except KeyError:
+      resp Http404
+
+    resp(%* stock)
 
   put "/@id":
     var item = newItem()
