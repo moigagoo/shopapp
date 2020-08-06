@@ -12,4 +12,4 @@ bin           = @["app"]
 
 # Dependencies
 
-requires "nim >= 1.2.6", "dotenv >= 1.1.1", "jester#head", "norm >= 2.1.1", "norman >= 2.1.2"
+requires "nim >= 1.2.6", "dotenv >= 1.1.1", "jester#head", "norm >= 2.1.1", "norman >= 2.1.5"

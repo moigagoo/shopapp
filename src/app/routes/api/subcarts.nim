@@ -5,7 +5,7 @@ import sugar
 import jester
 
 import ../../db_backend
-import ../../models/[subcart, customer, item]
+import ../../models/[subcart, customer, item, stock]
 
 
 export json
@@ -16,6 +16,7 @@ export db_backend
 export subcart
 export customer
 export item
+export stock
 
 
 router subcarts:
@@ -25,13 +26,20 @@ router subcarts:
     var
       customer = newCustomer()
       item = newItem()
+      stock = newStock()
       subcart = newSubcart(customer, item, qty)
 
     try:
       withDb:
         db.select(customer, """"Customer".id = $1""", parseInt(@"customerId"))
         db.select(item, """id = $1""", parseInt(@"itemId"))
-        db.insert(subcart)
+        db.select(stock, """"Stock".item = $1""", parseInt(@"itemId"))
+
+        if qty <= stock.qty:
+          db.insert(subcart)
+
+        else:
+          raise newException(ValueError, "Not enough items in stock")
 
       resp(Http201, $subcart.id)
 
@@ -39,7 +47,7 @@ router subcarts:
       resp Http404
 
     except:
-      resp Http400
+      resp(Http400, getCurrentExceptionMsg())
 
   get "/@id":
     var subcart = newSubcart()
@@ -82,7 +90,7 @@ router subcarts:
       resp Http404
 
     except:
-      resp Http400
+      resp(Http400, getCurrentExceptionMsg())
 
     resp Http200
 

@@ -36,7 +36,7 @@ router stocks:
       resp Http404
 
     except:
-      resp Http400
+      resp(Http400, getCurrentExceptionMsg())
 
   get "/@id":
     var stock = newStock()
