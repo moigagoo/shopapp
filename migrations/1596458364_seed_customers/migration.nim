@@ -17,6 +17,5 @@ migrate:
 undo:
   withDb:
     discard @[newCustomer()].dup:
-      db.select("1")
+      db.select("""TRUE""")
       db.delete
-
