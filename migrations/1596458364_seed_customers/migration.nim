@@ -10,12 +10,14 @@ import models/[user, customer]
 
 migrate:
   withDb:
-    for i in 1..10:
-      discard newCustomer(newUser("user$#@example.com" % $i), "Alice $#" % $i, 20 + i).dup:
-        db.insert
+    db.transaction:
+      for i in 1..10:
+        discard newCustomer(newUser("user$#@example.com" % $i), "Alice $#" % $i, 20 + i).dup:
+          db.insert
 
 undo:
   withDb:
-    discard @[newCustomer()].dup:
-      db.select("""TRUE""")
-      db.delete
+    db.transaction:
+      discard @[newCustomer()].dup:
+        db.select("""TRUE""")
+        db.delete

@@ -7,7 +7,8 @@ import models/user
 
 migrate:
   withDb:
-    db.createTables(newUser())
+    db.transaction:
+      db.createTables(newUser())
 
 undo:
   let qry = """DROP TABLE IF EXISTS "User""""

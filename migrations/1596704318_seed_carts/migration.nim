@@ -9,20 +9,22 @@ import models/[subcart, customer, item]
 
 migrate:
   withDb:
-    for i in 1..9:
-      var customer = newCustomer()
+    db.transaction:
+      for i in 1..9:
+        var customer = newCustomer()
 
-      db.select(customer, """"Customer".id = $1""", i)
+        db.select(customer, """"Customer".id = $1""", i)
 
-      for j in 1..i:
-        let item = newItem().dup:
-          db.select("""id = $1""", j)
+        for j in 1..i:
+          let item = newItem().dup:
+            db.select("""id = $1""", j)
 
-        discard newSubcart(customer, item, i).dup:
-          db.insert
+          discard newSubcart(customer, item, i).dup:
+            db.insert
 
 undo:
   withDb:
-    discard @[newSubcart()].dup:
-      db.select("""TRUE""")
-      db.delete
+    db.transaction:
+      discard @[newSubcart()].dup:
+        db.select("""TRUE""")
+        db.delete

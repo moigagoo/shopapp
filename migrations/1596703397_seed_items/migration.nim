@@ -11,12 +11,14 @@ import models/item
 
 migrate:
   withDb:
-    for i in 1..9:
-      discard newItem("Golden Pants #$#" % $i, i * 1.11).dup:
-        db.insert
+    db.transaction:
+      for i in 1..9:
+        discard newItem("Golden Pants #$#" % $i, i * 1.11).dup:
+          db.insert
 
 undo:
   withDb:
-    discard @[newItem()].dup:
-      db.select("""TRUE""")
-      db.delete
+    db.transaction:
+      discard @[newItem()].dup:
+        db.select("""TRUE""")
+        db.delete

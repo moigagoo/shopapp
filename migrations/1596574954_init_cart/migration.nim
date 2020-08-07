@@ -7,7 +7,8 @@ import models/cart
 
 migrate:
   withDb:
-    db.createTables(newCart())
+    db.transaction:
+      db.createTables(newCart())
 
 undo:
   let qry = """DROP TABLE IF EXISTS "Cart""""

@@ -17,19 +17,20 @@ migrate:
 
 undo:
   withDb:
-    let qry = """ALTER TABLE "Item" ADD COLUMN stock INTEGER NOT NULL DEFAULT 0"""
+    db.transaction:
+      let qry = """ALTER TABLE "Item" ADD COLUMN stock INTEGER NOT NULL DEFAULT 0"""
 
-    debug qry
-    db.exec sql qry
+      debug qry
+      db.exec sql qry
 
-    let stocks = @[newStock()].dup:
-      db.select("""TRUE""")
+      let stocks = @[newStock()].dup:
+        db.select("""TRUE""")
 
-    for stock in stocks:
-      var item = newItem()
+      for stock in stocks:
+        var item = newItem()
 
-      db.select(item, """id = $1""", stock.item.id)
+        db.select(item, """id = $1""", stock.item.id)
 
-      item.stock = stock.qty
+        item.stock = stock.qty
 
-      db.update(item)
+        db.update(item)

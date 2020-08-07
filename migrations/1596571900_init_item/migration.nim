@@ -7,7 +7,8 @@ import models/item
 
 migrate:
   withDb:
-    db.createTables(newItem())
+    db.transaction:
+      db.createTables(newItem())
 
 undo:
   let qry = """DROP TABLE IF EXISTS "Item""""

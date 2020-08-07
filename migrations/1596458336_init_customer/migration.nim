@@ -7,7 +7,8 @@ import models/customer
 
 migrate:
   withDb:
-    db.createTables(newCustomer())
+    db.transaction:
+      db.createTables(newCustomer())
 
 undo:
   let qry = """DROP TABLE IF EXISTS "Customer""""

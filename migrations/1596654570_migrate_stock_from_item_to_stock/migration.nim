@@ -9,12 +9,13 @@ import models/[item, stock]
 
 migrate:
   withDb:
-    let items = @[newItem()].dup:
-      db.select("""TRUE""")
+    db.transaction:
+      let items = @[newItem()].dup:
+        db.select("""TRUE""")
 
-    for item in items:
-      discard newStock(item, item.stock).dup:
-        db.insert
+      for item in items:
+        discard newStock(item, item.stock).dup:
+          db.insert
 
 undo:
   withDb:
