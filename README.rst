@@ -31,7 +31,7 @@ Usage
 
 .. code-block::
 
-    $ docker-compose run --service-ports web bash
+    $ docker-compose run --rm --service-ports web bash
 
 5.  Inside the container, apply the DB migrations:
 
