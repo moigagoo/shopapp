@@ -38,7 +38,7 @@ proc newItemList*(page: Positive): ItemList =
 
 proc render*(itemList: ItemList): VNode =
   buildHtml(tdiv):
-    h1:
+    h2:
       text &"Page: {itemList.page}"
 
     select:

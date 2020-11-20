@@ -9,7 +9,7 @@ import ../../models/item
 proc render*(item: Item): VNode =
   buildHtml:
     tdiv(style = {margin: "10px", borderColor: "red", borderStyle: "dashed"}):
-      h2:
+      h3:
         text item.title
 
       p:
