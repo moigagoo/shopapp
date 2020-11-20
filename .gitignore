@@ -3,6 +3,7 @@
 *.sublime-workspace
 
 *.exe
+*.js
 *.db
 
 htmldocs

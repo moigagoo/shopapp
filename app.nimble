@@ -18,4 +18,4 @@ requires "nim >= 1.4.0", "dotenv >= 1.1.1", "jester#head", "norm >= 2.2.2", "nor
 # Tasks
 
 task frontend, "Build frontend":
-  selfExec "js -o:public/index.js src/app/frontend/index.nim"
+  selfExec "js -o:public/app.js src/app/frontend/index.nim"
