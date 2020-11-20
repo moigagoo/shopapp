@@ -1,4 +1,4 @@
-import json, strformat
+import json, strformat, strutils
 
 include karax/prelude
 import karax/kajax
@@ -40,6 +40,13 @@ proc render*(itemList: ItemList): VNode =
   buildHtml(tdiv):
     h1:
       text &"Page: {itemList.page}"
+
+    select:
+      option: text "1"
+      option(selected = ""): text "3"
+      option: text "5"
+      proc onChange(ev: Event, n: VNode) =
+        itemList.perPage = parseInt(n.value)
 
     if itemList.page > 1:
       a(href = &"#items/{itemList.page - 1}"):
