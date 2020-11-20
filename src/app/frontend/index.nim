@@ -1,48 +1,38 @@
+import strutils
+
 include karax/prelude
 
-import json
-
-import karax/kajax
-
-import components/tweetbox
-import ../models/item
+import pages/items
 
 
 type
-  State = object
-    tweetBox: TweetBox
-    anotherTweetBox: TweetBox
+  GlobalState = ref object
+    itemsPageState: ItemsPageState
 
-func initState(): State =
-  result.tweetBox = initTweetBox()
-  result.anotherTweetBox = initTweetBox()
 
-var s: kstring
+proc newGlobalState: GlobalState =
+  GlobalState(itemsPageState: newItemsPageState())
 
-proc cb(httpStat: int, resp: kstring) =
-  let
-    j = parseJson($resp)
-    i = j.to Item
 
-  s = i.title
+proc main =
+  var state = newGlobalState()
 
-proc main() =
-  var state = initState()
-
-  proc render(): VNode =
+  proc render(context: RouterData): VNode =
     buildHtml(tdiv):
-      h1(text "Hello Karax")
+      if context.hashPart.startsWith("#items"):
+        if context.hashPart != "#items":
+          let page = parseInt(context.hashPart.split("/")[^1])
+          state.itemsPageState.page = page
 
-      render state.tweetBox
-      render state.anotherTweetBox
+        render state.itemsPageState
 
-      p:
-        text s
+      else:
+        p:
+          text "Hello from Karax 😌"
 
-      button:
-        text "AJAX"
-        proc onclick(ev: Event; n: VNode) =
-          ajaxGet("/api/items/5", @[], cb)
+        a(href="#items"):
+          text "Go to Items"
+
 
   setRenderer render
 
