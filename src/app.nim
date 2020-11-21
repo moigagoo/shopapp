@@ -11,7 +11,7 @@ const indexHtml = """
 <head>
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>index</title>
-
+  <link rel="stylesheet" href="https://unpkg.com/mvp.css">
 </head>
 <body id="body">
 <div id="ROOT" />
