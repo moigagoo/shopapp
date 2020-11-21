@@ -9,6 +9,10 @@ proc renderItem*(item: Item, ctx: RouterData): VNode =
   buildHtml:
     aside:
       h3: text item.title
+
+      figure:
+        img(src = "https://avatars0.githubusercontent.com/u/1045340?s=460&v=4")
+
       details:
         summary: text "Great product"
         p:
