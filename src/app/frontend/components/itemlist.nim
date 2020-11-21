@@ -1,14 +1,16 @@
 import json, strformat, strutils
 
 include karax/prelude
-import karax/kajax
+import karax/[kajax, vstyles]
 
 import ../../models/item
 
 import itembox
 
 
-const defaultPerPage = 3
+const
+  defaultPage = 1
+  defaultPerPage = 3
 
 
 type
@@ -17,43 +19,30 @@ type
     items*: seq[Item]
 
 
-proc updateItems*(itemList: var ItemList) =
+proc updateItems*(state: var ItemList) =
   proc cb(stat: int, resp: kstring) =
     if stat == 200:
       let
         payload = parseJson($resp)
         items = payload.to(seq[Item])
 
-      itemList.items = items
+      state.items.add items
 
-  ajaxGet(&"/api/items/?page={itemList.page}&per_page={itemList.perPage}", @[], cb)
+  ajaxGet(&"/api/items/?page={state.page}&per_page={state.perPage}", @[], cb)
 
-proc newItemList*(page, perPage: Positive, items: seq[Item]): ItemList =
-  result = ItemList(page: page, perPage: perPage, items: items)
+proc newItemList*: ItemList =
+  result = ItemList(page: defaultPage, perPage: defaultPerPage, items: @[])
   result.updateItems()
 
-proc newItemList*(page: Positive): ItemList =
-  newItemList(page, defaultPerPage, @[])
 
-
-proc render*(itemList: ItemList): VNode =
+proc render*(state: var ItemList, ctx: RouterData): VNode =
   buildHtml(tdiv):
-    h2:
-      text &"Page: {itemList.page}"
+    section(style = {display: "flex", flexWrap: "wrap"}):
+      for item in state.items:
+        renderItem(item, ctx)
 
-    select:
-      option: text "1"
-      option(selected = ""): text "3"
-      option: text "5"
-      proc onChange(ev: Event, n: VNode) =
-        itemList.perPage = parseInt(n.value)
-
-    if itemList.page > 1:
-      a(href = &"#items/{itemList.page - 1}"):
-        text "<<"
-
-    a(href = &"#items/{itemList.page + 1}"):
-      text ">>"
-
-    for item in itemList.items:
-      render item
+    button:
+      text "Load more"
+      proc onClick =
+        inc state.page
+        state.updateItems()

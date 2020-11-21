@@ -1,22 +1,20 @@
 import strformat
 
 include karax/prelude
-import karax/vstyles
 
 import ../../models/item
 
 
-proc render*(item: Item): VNode =
+proc renderItem*(item: Item, ctx: RouterData): VNode =
   buildHtml:
-    tdiv(style = {margin: "10px", borderColor: "red", borderStyle: "dashed"}):
-      h3:
-        text item.title
+    aside:
+      h3: text item.title
+      details:
+        summary: text "Great product"
+        p:
+          text "This is a really cool thing y'all."
 
       p:
-        text $item.unitPrice
+        mark: text &"${item.unitPrice}"
 
-      button:
-        text &"Buy item #{item.id}"
-        proc onClick =
-          echo item[]
-          echo &"Buy item #{item.id}"
+      button: text &"Buy item #{item.id}"
