@@ -1,8 +1,8 @@
-**************************************
-Shop API with Jester, Norm, and Norman
-**************************************
+*********************************************
+Shop App with Karax, Jester, Norm, and Norman
+*********************************************
 
-This is webapp that demonstrates how to create RESTful webapps with `Jester <https://github.com/dom96/jester/>`_ framework, `Norm <https://moigagoo.github.io/norm/norm.html>`_ ORM, and `Norman <https://moigagoo.github.io/norman/norman.html>`_ migration manager.
+This is a proof-of-concept for a webapp created with Karax for frontend, Jester for API server, Norm for ORM, and Norman for migration management.
 
 
 Usage
@@ -43,9 +43,11 @@ Usage
 
 .. code-block::
 
-    $ ./bin/app
+    $ nimble run
 
-5.  Send requests to it in a separate terminal:
+5.  Open your browser at ``localhost:5000`` and play around.
+
+6.  Send requests to it in a separate terminal:
 
 .. code-block::
 
