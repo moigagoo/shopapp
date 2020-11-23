@@ -1,7 +1,6 @@
-import json, strutils, strformat
+import json, strformat
 
-include karax/prelude
-import karax/kajax
+import karax/[kbase, karax, karaxdsl, vdom, jstrutils, kajax]
 
 import ../components/[itemdetails, loader]
 

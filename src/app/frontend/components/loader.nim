@@ -1,5 +1,4 @@
-include karax/prelude
-import karax/vstyles
+import karax/[karaxdsl, vdom, vstyles]
 
 
 proc renderLoader*: VNode =

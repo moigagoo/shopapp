@@ -1,8 +1,9 @@
-import strutils, pegs
+import pegs
 
-include karax/prelude
+import karax/[karax, karaxdsl, vdom]
 
 import pages/[items, item]
+import components/loader
 
 
 type
@@ -31,7 +32,7 @@ proc run =
         elif $ctx.hashPart =~ peg"'#items/' \d+":
           state.itemPage.render(ctx)
         else:
-          p: text "🔥"
+          renderLoader()
 
   setRenderer render
 

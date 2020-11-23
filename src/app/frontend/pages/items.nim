@@ -1,4 +1,4 @@
-include karax/prelude
+import karax/[karax, karaxdsl, vdom]
 
 import ../components/itemlist
 

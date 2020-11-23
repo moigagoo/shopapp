@@ -1,7 +1,6 @@
-import json, strformat, strutils
+import json, strformat
 
-include karax/prelude
-import karax/[kajax, vstyles]
+import karax/[kbase, karax, karaxdsl, vdom, kajax, vstyles]
 
 import ../../models/item
 

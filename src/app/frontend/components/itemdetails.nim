@@ -1,6 +1,6 @@
 import strformat
 
-include karax/prelude
+import karax/[karax, karaxdsl, vdom]
 
 import ../../models/item
 
