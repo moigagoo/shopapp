@@ -1,17 +1,18 @@
-import strutils
+import strutils, pegs
 
 include karax/prelude
 
-import pages/items
+import pages/[items, item]
 
 
 type
   State = ref object
     itemsPage: ItemsPage
+    itemPage: ItemPage
 
 
 proc newState: State =
-  State(itemsPage: newItemsPage())
+  State(itemsPage: newItemsPage(), itemPage: newItemPage())
 
 
 proc run =
@@ -25,8 +26,10 @@ proc run =
           li: a(href = "#items"): text "Items"
 
       main:
-        if ctx.hashPart.startsWith("#items"):
+        if ctx.hashPart == ("#items"):
           state.itemsPage.render(ctx)
+        elif $ctx.hashPart =~ peg"'#items/' \d+":
+          state.itemPage.render(ctx)
         else:
           p: text "🔥"
 
