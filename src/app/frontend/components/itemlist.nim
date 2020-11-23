@@ -17,6 +17,7 @@ type
   ItemList* = ref object
     page*, perPage*: Positive
     items*: seq[Item]
+    allFetched*: bool
 
 
 proc updateItems*(state: var ItemList) =
@@ -26,23 +27,28 @@ proc updateItems*(state: var ItemList) =
         payload = parseJson($resp)
         items = payload.to(seq[Item])
 
-      state.items.add items
+      if len(items) == 0:
+        state.allFetched = true
+      else:
+        state.items.add items
 
   ajaxGet(&"/api/items/?page={state.page}&per_page={state.perPage}", @[], cb)
 
 proc newItemList*: ItemList =
-  result = ItemList(page: defaultPage, perPage: defaultPerPage, items: @[])
-  result.updateItems()
+  result = ItemList(page: defaultPage, perPage: defaultPerPage, items: @[], allFetched: false)
 
 
 proc render*(state: var ItemList, ctx: RouterData): VNode =
+  if not state.allFetched and len(state.items) < state.page * state.perPage:
+    state.updateItems()
+
   buildHtml(tdiv):
     section(style = {display: "flex", flexWrap: "wrap"}):
       for item in state.items:
         renderItem(item, ctx)
 
-    button:
-      text "Load more"
-      proc onClick =
-        inc state.page
-        state.updateItems()
+    if not state.allFetched:
+      button:
+        text "Load more"
+        proc onClick =
+          inc state.page
