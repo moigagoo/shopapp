@@ -6,7 +6,7 @@ import ../../models/item
 
 
 proc renderItem*(item: Item, ctx: RouterData): VNode =
-  buildHtml:
+  buildHtml(tdiv):
     aside:
       h3: text item.title
 
@@ -21,4 +21,5 @@ proc renderItem*(item: Item, ctx: RouterData): VNode =
       p:
         mark: text &"${item.unitPrice}"
 
-      button: text &"Buy item #{item.id}"
+      a(href = &"#items/{item.id}"):
+        em: text &"View item"
