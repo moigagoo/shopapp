@@ -10,7 +10,7 @@ const indexHtml = """
 <html>
 <head>
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>index</title>
+  <title>Shop</title>
   <link rel="stylesheet" href="mvp.css">
 </head>
 <body id="body">
