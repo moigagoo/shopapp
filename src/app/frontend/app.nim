@@ -27,6 +27,8 @@ proc run =
       main:
         if ctx.hashPart.startsWith("#items"):
           state.itemsPage.render(ctx)
+        else:
+          p: text "🔥"
 
   setRenderer render
 
