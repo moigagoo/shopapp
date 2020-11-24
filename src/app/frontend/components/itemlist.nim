@@ -54,3 +54,5 @@ proc render*(state: var ItemList, ctx: RouterData): VNode =
           text "Load more"
           proc onClick =
             inc state.page
+      else:
+        small: text "No more items to load"
