@@ -12,7 +12,7 @@ bin           = @["app"]
 
 # Dependencies
 
-requires "nim >= 1.4.0", "dotenv >= 1.1.1", "jester#head", "norm >= 2.2.2", "norman >= 2.1.7"
+requires "nim >= 1.4.0", "dotenv >= 1.1.1", "karax#head", "jester#head", "norm >= 2.2.2", "norman >= 2.1.7"
 
 
 # Tasks
