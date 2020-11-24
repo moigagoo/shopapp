@@ -39,15 +39,21 @@ Usage
 
     $ norman migrate --compile
 
-4.  Run the app server:
+6.  Build the frontend app:
+
+.. code-block::
+
+    $ nimble frontend
+
+7.  Run the app server:
 
 .. code-block::
 
     $ nimble run
 
-5.  Open your browser at ``localhost:5000`` and play around.
+8.  Open your browser at ``localhost:5000`` and play around.
 
-6.  Send requests to it in a separate terminal:
+9.  Send requests to it in a separate terminal:
 
 .. code-block::
 
