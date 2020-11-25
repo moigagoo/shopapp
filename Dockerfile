@@ -6,5 +6,6 @@ COPY . /usr/src/app
 
 RUN apt-get update && apt-get install -y postgresql-client
 RUN nimble build -y
+RUN nimble frontend
 
 CMD ./bin/app
