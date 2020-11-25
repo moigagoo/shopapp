@@ -21,15 +21,27 @@ Usage
 
     $ cp .env_example .env
 
-3.  Run the app:
+3.  Build the image:
 
 .. code-block::
 
-    $ docker-compose up --build
+    $ docker-compose build
 
-4.  Open your browser at ``localhost:5000`` and play around.
+4.  Apply migrations:
 
-5.  Send requests to it in a separate terminal:
+.. code-block::
+
+    $ docker-compose run --rm web norman migrate
+
+5.  Run the app:
+
+.. code-block::
+
+    $ docker-compose up
+
+6.  Open your browser at ``localhost:5000`` and play around.
+
+7.  Send requests to it in a separate terminal:
 
 .. code-block::
 
