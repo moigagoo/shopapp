@@ -21,39 +21,15 @@ Usage
 
     $ cp .env_example .env
 
-3.  Build the images:
+3.  Run the app:
 
 .. code-block::
 
-    $ docker-compose build
+    $ docker-compose up --build
 
-4.  Enter the ``web`` service:
+4.  Open your browser at ``localhost:5000`` and play around.
 
-.. code-block::
-
-    $ docker-compose run --rm --service-ports web bash
-
-5.  Inside the container, apply the DB migrations:
-
-.. code-block::
-
-    $ norman migrate --compile
-
-6.  Build the frontend app:
-
-.. code-block::
-
-    $ nimble frontend
-
-7.  Run the app server:
-
-.. code-block::
-
-    $ nimble run
-
-8.  Open your browser at ``localhost:5000`` and play around.
-
-9.  Send requests to it in a separate terminal:
+5.  Send requests to it in a separate terminal:
 
 .. code-block::
 
