@@ -24,15 +24,16 @@ proc newItemList*: ItemList =
 
 proc updateItems*(state: var ItemList) =
   proc cb(stat: int, resp: kstring) =
-    if stat == 200:
-      let
-        payload = parseJson($resp)
-        items = payload.to(seq[Item])
+    var items: seq[Item]
 
-      if len(items) == 0:
-        state.allFetched = true
-      else:
-        state.items.add items
+    if stat == 200:
+      let payload = parseJson($resp)
+      items = payload.to(seq[Item])
+
+    if len(items) == 0:
+      state.allFetched = true
+    else:
+      state.items.add items
 
   ajaxGet(&"/api/items/?page={state.page}&per_page={state.perPage}", @[], cb)
 
@@ -52,7 +53,6 @@ proc render*(state: var ItemList, ctx: RouterData): VNode =
       if not state.allFetched:
         button:
           text "Load more"
-          proc onClick =
-            inc state.page
+          proc onClick = inc state.page
       else:
-        small: text "No more items to load"
+        small: text "All items loaded"
