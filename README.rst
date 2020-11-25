@@ -27,21 +27,27 @@ Usage
 
     $ docker-compose build
 
-4.  Apply migrations:
+4.  Start ``web`` service and enter the container:
 
 .. code-block::
 
-    $ docker-compose run --rm web norman migrate
+    $ docker-compose run --rm --service-ports web bash
 
-5.  Run the app:
+5.  Apply the migrations:
 
 .. code-block::
 
-    $ docker-compose up
+    $ norman migrate
 
-6.  Open your browser at ``localhost:5000`` and play around.
+6.  Run the app:
 
-7.  Send requests to it in a separate terminal:
+.. code-block::
+
+    $ nimble run
+
+7.  Open your browser at ``localhost:5000`` and play around.
+
+8.  Send requests to it in a separate terminal:
 
 .. code-block::
 
