@@ -31,3 +31,7 @@ proc render*(state: SideBar, ctx: RouterData): VNode =
         li: text "Hello"
         li: text "from"
         li: text "Sidebar"
+
+      button:
+        text "🍔"
+        proc onClick = state.visible = not state.visible
