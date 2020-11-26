@@ -4,7 +4,7 @@ import karax/[kbase, karax, karaxdsl, vdom, kajax, vstyles]
 
 import ../../models/item
 
-import itembox, loader, sidebar
+import itembox, loader
 
 
 const
@@ -47,8 +47,6 @@ proc render*(state: var ItemList, ctx: RouterData): VNode =
       renderLoader()
 
     else:
-      renderSidebar(ctx)
-
       section(style = {display: "flex", flexWrap: "wrap"}):
         for item in state.items:
           renderItem(item, ctx)

@@ -1,11 +1,19 @@
-include karax/prelude
-import karax/vstyles
+import karax/[karax, karaxdsl, vdom, vstyles]
 
 
-var visible: bool = true
+type
+  SideBar* = ref object
+    visible*: bool
 
 
-proc renderSidebar*(ctx: RouterData): VNode =
+func newSideBar*(visible: bool): SideBar =
+  SideBar(visible: visible)
+
+func newSideBar*: SideBar =
+  newSideBar(false)
+
+
+proc render*(state: SideBar, ctx: RouterData): VNode =
   buildHtml:
     tdiv(style = {
       height: "100%",
@@ -16,12 +24,8 @@ proc renderSidebar*(ctx: RouterData): VNode =
       zIndex: "1",
       boxShadow: "0 0 10px black",
       backgroundColor: "#FFF",
-      visibility: if visible: "visible" else: "hidden"
+      visibility: if state.visible: "visible" else: "hidden"
     }):
-      button:
-        text ">>"
-        proc onClick = visible = not visible
-
       ul:
         li: text "Hello"
         li: text "from"
