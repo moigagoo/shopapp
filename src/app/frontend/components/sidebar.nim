@@ -18,13 +18,13 @@ proc render*(state: SideBar, ctx: RouterData): VNode =
     tdiv(style = {
       height: "100%",
       width: "300px",
-      position: "fixed",
       top: "0",
-      right: "0",
+      right: if state.visible: "0" else: "-300px",
+      position: "fixed",
       zIndex: "1",
-      boxShadow: "0 0 10px black",
       backgroundColor: "#FFF",
-      visibility: if state.visible: "visible" else: "hidden"
+      boxShadow: "0 0 10px black",
+      transition: "0.4s"
     }):
       ul:
         li: text "Hello"
