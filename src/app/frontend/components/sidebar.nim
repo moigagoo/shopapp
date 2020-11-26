@@ -20,7 +20,7 @@ proc render*(state: SideBar, ctx: RouterData): VNode =
       width: "300px",
       top: "0",
       right: "0",
-      position: "absolute",
+      position: "fixed",
       zIndex: "1",
       backgroundColor: "#FFF",
       boxShadow: "0 0 10px black",
