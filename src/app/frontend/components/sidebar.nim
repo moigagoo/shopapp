@@ -19,11 +19,12 @@ proc render*(state: SideBar, ctx: RouterData): VNode =
       height: "100%",
       width: "300px",
       top: "0",
-      right: if state.visible: "0" else: "-300px",
-      position: "fixed",
+      right: "0",
+      position: "absolute",
       zIndex: "1",
       backgroundColor: "#FFF",
       boxShadow: "0 0 10px black",
+      transform: if state.visible: "translateX(0)" else: "translateX(310px)",
       transition: "0.4s"
     }):
       ul:
