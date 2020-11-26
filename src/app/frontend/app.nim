@@ -24,7 +24,7 @@ proc run =
     buildHtml(tdiv):
       nav:
         ul:
-          li: a(href = ""): text "🏠"
+          li: a(href = "#"): text "🏠"
           li: a(href = "#items"): text "Items"
           li:
             button:
