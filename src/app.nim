@@ -8,16 +8,19 @@ import app/routes/api
 const indexHtml = """
 <!DOCTYPE html>
 <html>
-<head>
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Shop</title>
-  <link rel="stylesheet" href="https://unpkg.com/mvp.css">
-  <link rel="stylesheet" href="animations.css">
-</head>
-<body id="body">
-<div id="ROOT" />
-<script type="text/javascript" src="app.js"></script>
-</body>
+  <head>
+    <title>Shop</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="animations.css">
+  </head>
+
+  <body id="body">
+    <div id="ROOT" />
+    <script type="text/javascript" src="app.js"></script>
+  </body>
 </html>
 """
 
