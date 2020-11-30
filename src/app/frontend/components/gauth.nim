@@ -11,6 +11,26 @@ var gapi {.importc.}: JsObject
 proc init {.exportc.} =
   gapi.load("auth2")
 
+proc getUser(clientCfg: JsObject): Future[JsObject] {.async.} =
+  newPromise(proc(resolve: proc(resp: JsObject)) =
+    resolve gapi.auth2.init(clientCfg)
+  )
+
+proc doSignIn(clientCfg: JsObject): Future[JsObject] {.async.} =
+  var user = await getUser(clientCfg)
+
+  newPromise(proc(resolve: proc(resp: JsObject)) =
+    resolve user.signIn()
+  )
+
+proc signIn(clientCfg: JsObject) {.async.} =
+  let
+    user = await doSignIn(clientCfg)
+    profile = user.getBasicProfile()
+    authResp = user.getAuthResponse()
+
+  console.log(profile.getGivenName())
+  console.log(authResp.id_token)
 
 proc renderGoogleButton*: VNode =
   loadScript("https://apis.google.com/js/platform.js?onload=init")
@@ -21,14 +41,16 @@ proc renderGoogleButton*: VNode =
       proc onClick =
         let clientCfg = JsObject{client_id: clientId}
 
-        gapi.auth2.init(clientCfg).then(
-          proc(user: JsObject) = user.signIn().then(
-            proc(user: JsObject) =
-              let
-                profile = user.getBasicProfile()
-                authResp = user.getAuthResponse()
+        discard signIn(clientCfg)
 
-              console.log(profile.getGivenName())
-              console.log(authResp.id_token)
-          )
-        )
+        # gapi.auth2.init(clientCfg).then(
+        #   proc(user: JsObject) = user.signIn().then(
+        #     proc(user: JsObject) =
+        #       let
+        #         profile = user.getBasicProfile()
+        #         authResp = user.getAuthResponse()
+
+        #       console.log(profile.getGivenName())
+        #       console.log(authResp.id_token)
+        #   )
+        # )
