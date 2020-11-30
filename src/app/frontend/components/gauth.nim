@@ -24,7 +24,11 @@ proc renderGoogleButton*: VNode =
         gapi.auth2.init(clientCfg).then(
           proc(user: JsObject) = user.signIn().then(
             proc(user: JsObject) =
-              let profile = user.getBasicProfile()
-              console.log(profile)
+              let
+                profile = user.getBasicProfile()
+                authResp = user.getAuthResponse()
+
+              console.log(profile.getGivenName())
+              console.log(authResp.id_token)
           )
         )
