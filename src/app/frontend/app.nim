@@ -3,7 +3,7 @@ import pegs
 import karax/[karax, karaxdsl, vdom]
 
 import pages/[items, item]
-import components/[loader, sidebar]
+import components/[loader, sidebar, gauth]
 
 
 type
@@ -14,7 +14,11 @@ type
 
 
 proc newState: State =
-  State(itemsPage: newItemsPage(), itemPage: newItemPage(), sideBar: newSideBar())
+  State(
+    itemsPage: newItemsPage(),
+    itemPage: newItemPage(),
+    sideBar: newSideBar()
+  )
 
 
 proc run =
@@ -30,6 +34,8 @@ proc run =
             button:
               text "🍔"
               proc onClick = state.sideBar.visible = not state.sideBar.visible
+
+        renderGoogleButton()
 
       state.sideBar.render(ctx)
 
