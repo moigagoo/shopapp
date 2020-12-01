@@ -11,15 +11,13 @@ type
     itemsPage: ItemsPage
     itemPage: ItemPage
     sideBar: SideBar
-    gauth: GAuth
 
 
 proc newState: State =
   State(
     itemsPage: newItemsPage(),
     itemPage: newItemPage(),
-    sideBar: newSideBar(),
-    gauth: newGAuth()
+    sideBar: newSideBar()
   )
 
 
@@ -37,7 +35,7 @@ proc run =
               text "🍔"
               proc onClick = state.sideBar.visible = not state.sideBar.visible
 
-        state.gauth.render(ctx)
+        renderGoogleButton()
 
       state.sideBar.render(ctx)
 
