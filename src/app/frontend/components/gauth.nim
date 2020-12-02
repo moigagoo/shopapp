@@ -23,26 +23,6 @@ func newGoogleButton*: GoogleButton =
 proc init {.exportc.} =
   gapi.load("auth2")
 
-# proc getUser(clientCfg: JsObject): Future[JsObject] {.async.} =
-#   newPromise(proc(resolve: proc(resp: JsObject)) =
-#     resolve gapi.auth2.init(clientCfg)
-#   )
-
-# proc doSignIn(clientCfg: JsObject): Future[JsObject] {.async.} =
-#   var user = await getUser(clientCfg)
-
-#   newPromise(proc(resolve: proc(resp: JsObject)) =
-#     resolve user.signIn()
-#   )
-
-# proc signIn(clientCfg: JsObject) {.async.} =
-#   let
-#     user = await doSignIn(clientCfg)
-#     profile = user.getBasicProfile()
-#     authResp = user.getAuthResponse()
-
-#   console.log(profile.getGivenName())
-#   console.log(authResp.id_token)
 
 proc render*(state: var GoogleButton, ctx: RouterData): VNode =
   loadScript("https://apis.google.com/js/platform.js?onload=init")
@@ -66,7 +46,6 @@ proc render*(state: var GoogleButton, ctx: RouterData): VNode =
                 redraw()
             )
           )
-        # discard signIn(JsObject{client_id: clientId})
 
       else:
         text "Sign out"
