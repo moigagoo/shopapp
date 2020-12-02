@@ -13,6 +13,7 @@ type
   GoogleButton* = ref object
     signedIn*: bool
 
+
 func newGoogleButton*(signedIn: bool): GoogleButton =
   GoogleButton(signedIn: signedIn)
 
