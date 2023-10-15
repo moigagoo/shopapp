@@ -7,10 +7,10 @@ type
   Subcart* = ref object of Model
     customer*: Customer
     item*: Item
-    qty*: Positive
+    qty*: Natural
 
 
-func newSubcart*(customer: Customer, item: Item, qty: Positive): Subcart =
+func newSubcart*(customer: Customer, item: Item, qty: Natural): Subcart =
   Subcart(customer: customer, item: item, qty: qty)
 
 func newSubcart*(customer: Customer, item: Item): Subcart =
