@@ -43,7 +43,7 @@ Usage
 
 .. code-block::
 
-    $ nimble run
+    $ nimble run --deepcopy:on
 
 7.  Open your browser at ``localhost:5000`` and play around.
 
